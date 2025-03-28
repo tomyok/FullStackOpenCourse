@@ -1,21 +1,32 @@
 import { useState } from 'react'
 
+const StaticLine = ({text, value}) => {
+
+  return (
+    <>
+    {text}: {value}
+    <br />
+    </>
+
+  )
+}
+
 const Statics = ({good, neutral, bad, all, average, positive}) => {
   
   return (
     <>
     <h2>Statics</h2>
-    Good: {good}
+    <StaticLine text = "Good" value = {good}/>
     <br />
-    Neutral: {neutral}
+    <StaticLine text = "Neutral" value = {neutral}/>
     <br />
-    Bad: {bad}
+    <StaticLine text = "Bad" value = {bad}/>
     <br />
-    All: {all}
+    <StaticLine text = "All" value = {all}/>
     <br />
-    Average: {average}
+    <StaticLine text = "Average" value = {average}/>
     <br />
-    Positive: {positive} %
+    <StaticLine text = "Positive %" value = {positive}/>
     </>
   )
 }
