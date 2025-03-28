@@ -17,6 +17,13 @@ const StaticLine = ({text, value}) => {
   )
 }
 
+const Buttons = ({text, param}) => {
+
+  return (
+    <button onClick={param}>{text}</button>
+  )
+}
+
 const Statics = ({good, neutral, bad, all, average, positive}) => {
   
   return (
@@ -90,14 +97,14 @@ const App = () => {
   return (
     <div>
       <h1>Give Feedback</h1>
-      <button onClick={() => handleClick("good")}>good</button>
-      <button onClick={() => handleClick("neutral")}>neutral</button>
-      <button onClick={() => handleClick("bad")}>bad</button>
+      <Buttons param={() => handleClick("good")} text = "Good" />
+      <Buttons param={() => handleClick("neutral")} text = "Neutral" />
+      <Buttons param={() => handleClick("bad")} text = "Bad" />
       {isStatics === true 
       ? <p>No feedback given</p> 
       : <Statics good = {good} neutral = {neutral} bad = {bad} all = {all} average = {average} positive = {positive}/>}
       <br />
-      <button onClick={randomAnecdote}>Next Anecdote</button>
+      <Buttons param={randomAnecdote} text = "Next Anecdote"/>
       <p>{anecdotes[selected]}</p>
     </div>
   )
