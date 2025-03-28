@@ -4,8 +4,14 @@ const StaticLine = ({text, value}) => {
 
   return (
     <>
-    {text}: {value}
-    <br />
+    <tr>
+      <td>
+        {text}: 
+      </td>
+      <td>
+        {value}
+      </td>
+    </tr>
     </>
 
   )
@@ -16,17 +22,16 @@ const Statics = ({good, neutral, bad, all, average, positive}) => {
   return (
     <>
     <h2>Statics</h2>
-    <StaticLine text = "Good" value = {good}/>
-    <br />
-    <StaticLine text = "Neutral" value = {neutral}/>
-    <br />
-    <StaticLine text = "Bad" value = {bad}/>
-    <br />
-    <StaticLine text = "All" value = {all}/>
-    <br />
-    <StaticLine text = "Average" value = {average}/>
-    <br />
-    <StaticLine text = "Positive %" value = {positive}/>
+    <table>
+      <tbody>
+        <StaticLine text = "Good" value = {good}/>
+        <StaticLine text = "Neutral" value = {neutral}/>
+        <StaticLine text = "Bad" value = {bad}/>
+        <StaticLine text = "All" value = {all}/>
+        <StaticLine text = "Average" value = {average}/>
+        <StaticLine text = "Positive %" value = {positive}/>
+      </tbody>
+    </table>
     </>
   )
 }
