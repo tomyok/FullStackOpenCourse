@@ -4,10 +4,8 @@ const Header = ({course}) => <h1>{course}</h1>
 
 const Course = ({course}) => {
 
-  let totalExercises = 0
-  {course.parts.map((part) => (
-    totalExercises += part.exercises
-))}
+  const totalExercises = course.parts.reduce((sum, part) => sum + part.exercises, 0);
+
   return (
     <div>
       <Header name = {course.name}/>
