@@ -4,10 +4,15 @@ const Header = ({course}) => <h1>{course}</h1>
 
 const Course = ({course}) => {
 
+  let totalExercises = 0
+  {course.parts.map((part) => (
+    totalExercises += part.exercises
+))}
   return (
     <div>
       <Header name = {course.name}/>
       <Content course = {course}/>
+      <Total total = {totalExercises}/> 
     </div>
   )
 }
@@ -41,10 +46,10 @@ const Part = ({name, exercises, id}) => {
   )
 }
 
-const Total = (props) => {
+const Total = ({total}) => {
 
   return (
-  <p>Number of exercises {props.total}</p>
+  <p>Number of exercises {total}</p>
   )
 }
 
