@@ -110,6 +110,23 @@ const App = () => {
     });
   }
 
+  const anecdoteVoteMax = () => {
+    let voteCountMax
+    let anecdoteVotePosition
+    const voteCount = Object.values(selected.votes)
+    for(let i = 0; i < anecdotes.length; i++){
+      if(i===0){
+        voteCountMax = voteCount[i];
+        anecdoteVotePosition = i;
+      } else if (voteCount[i] > voteCountMax){
+        voteCountMax = voteCount[i];
+        anecdoteVotePosition = i;
+      }
+    }
+  return [voteCountMax, anecdoteVotePosition]
+  }
+
+  let [voteCountMax, anecdoteVotePosition] = anecdoteVoteMax();
   return (
     <div>
       <h1>Give Feedback</h1>
@@ -120,10 +137,16 @@ const App = () => {
       ? <p>No feedback given</p> 
       : <Statics good = {good} neutral = {neutral} bad = {bad} all = {all} average = {average} positive = {positive}/>}
       <br />
+
+      <h2>Anecdote of the day</h2>
       <Buttons param={randomAnecdote} text = "Next Anecdote"/>
-      <button onClick={() => handleClickNext(selected.anecdoteCount)}>Vote</button>
+      <Buttons param={() => handleClickNext(selected.anecdoteCount)} text = "Vote"/>
       <p>Has {selected.votes[selected.anecdoteCount]} votes</p>
       <p>{anecdotes[selected.anecdoteCount]}</p>
+      
+      <h2>Anecdote with most votes</h2>
+      <p>{anecdotes[anecdoteVotePosition]}</p>
+      <p>Has {voteCountMax} votes</p>
     </div>
   )
 }
