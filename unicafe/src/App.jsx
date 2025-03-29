@@ -48,7 +48,10 @@ const App = () => {
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
-  const [selected, setSelected] = useState(0)
+  const [selected, setSelected] = useState({
+    anecdoteCount: 0,
+    votes: {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0}
+  })
   
   const anecdotes = [
     'If it hurts, do it more often.',
@@ -68,7 +71,10 @@ const App = () => {
   }
 
   const randomAnecdote = () => {
-    setSelected(getRandomInt(0, anecdotes.length))
+    setSelected({
+      ...selected,
+      anecdoteCount: getRandomInt(0, anecdotes.length),
+  });
   }
   
   
@@ -94,6 +100,16 @@ const App = () => {
   let average = all / 3;
   let positive = (good / all) * 100
 
+  const handleClickNext = (num) => {
+    setSelected({
+      ...selected,
+      votes: {
+        ...selected.votes,
+        [num]: selected.votes[num] + 1 // Incrementa el voto en la posición correcta
+      }
+    });
+  }
+
   return (
     <div>
       <h1>Give Feedback</h1>
@@ -105,7 +121,9 @@ const App = () => {
       : <Statics good = {good} neutral = {neutral} bad = {bad} all = {all} average = {average} positive = {positive}/>}
       <br />
       <Buttons param={randomAnecdote} text = "Next Anecdote"/>
-      <p>{anecdotes[selected]}</p>
+      <button onClick={() => handleClickNext(selected.anecdoteCount)}>Vote</button>
+      <p>Has {selected.votes[selected.anecdoteCount]} votes</p>
+      <p>{anecdotes[selected.anecdoteCount]}</p>
     </div>
   )
 }
