@@ -12,12 +12,16 @@ const App = () => {
 
   const addPerson = (event) => {
     event.preventDefault()
-    const person = {
-      name: newName
-    } 
-
-    setPersons(persons.concat(person));
+    if(isValidContact(newName)) {
+      alert(`${newName} is already added to phonebook`)
+    } else {
+      const person = {
+        name: newName
+      } 
+      setPersons(persons.concat(person));
+    }
     setNewName("");
+
   }
 
   const handleNoteChange = (event) => {
@@ -25,6 +29,8 @@ const App = () => {
     setNewName(event.target.value)
   }
 
+  const isValidContact = (name) => persons.some(person => person.name === name);
+  
   return (
     <div>
       <h2>Phonebook</h2>
