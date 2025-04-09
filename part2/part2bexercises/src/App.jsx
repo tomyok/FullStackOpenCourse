@@ -1,10 +1,22 @@
 import { useEffect, useState } from 'react'
 import contactsService from './services/contactsService'
 
-const Person = ({name, number}) => {
+const Person = ({id, name, number, setPersons, persons}) => {
+
+  const confirmDelete = () => {
+    
+    if(window.confirm(`Delete ${name} ?`)){
+      contactsService
+      .del(id)
+      .then(() => {
+        setPersons(persons.filter(person => person.id !== id ))
+      })
+    }
+}
+
   return (
     <div>
-      <li>{name}, {number}</li>
+      <li>{name}, {number} <button onClick={confirmDelete}>delete</button></li>
     </div>
   )
 }
@@ -69,13 +81,13 @@ const FormPersons = ({persons, setPersons, newName, newNumber, handleNameChange,
   )
 }
 
-const Persons = ({persons, nameFilter}) => {
+const Persons = ({persons, setPersons,nameFilter}) => {
 
   return (
       persons
       .filter(person => person.name.toLowerCase().includes(nameFilter.toLowerCase()))
       .map(person => (
-        <Person key={person.name} name={person.name} number={person.number} />
+        <Person key={person.id} id={person.id} name={person.name} number={person.number} setPersons={setPersons} persons={persons}/>
       ))
   )
 }
@@ -129,7 +141,7 @@ const App = () => {
         persons = {persons} setPersons = {setPersons}
         />
       <h2>Numbers</h2>
-        <Persons persons = {persons} nameFilter = {nameFilter}/>
+        <Persons persons = {persons} setPersons = {setPersons} nameFilter = {nameFilter}/>
     </div>
   )
 }
