@@ -34,20 +34,37 @@ const Filter = ({nameFilter, handleFilterChange}) => {
 const FormPersons = ({persons, setPersons, newName, newNumber, handleNameChange, handleNumberChange, setNewName, setNewNumber}) => {
 
   const addPerson = (event) => {
+
+    const existingPerson = personFind(newName)
     event.preventDefault()
+
     if(isValidContact(newName)) {
-      alert(`${newName} is already added to phonebook`)
+      const confirm = window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)
+      
+      if(confirm){
+
+        const person = { 
+          ...existingPerson,
+          number: newNumber
+         }
+         contactsService
+        .update(existingPerson.id, person)
+        .then(response => {
+          setPersons(persons.map(person => person.id !== existingPerson.id ? person : response.data))
+        })
+      }
     } else {
+
       const person = {
         name: newName,
         number: newNumber
-      }
-
+       }
       contactsService
       .create(person)
       .then(person => {
         setPersons(persons.concat(person))
       })
+    }
 
       /*
       axios
@@ -56,12 +73,13 @@ const FormPersons = ({persons, setPersons, newName, newNumber, handleNameChange,
           setPersons(persons.concat(response.data));
           })
           */
-    }
+    
     setNewName("");
     setNewNumber("");
   }
   
   const isValidContact = (name) => persons.some(person => person.name === name);
+  const personFind = (name) => persons.find(person => person.name === name);
 
   return (
   <form onSubmit={addPerson}>
@@ -99,6 +117,7 @@ const App = () => {
     contactsService
     .getAll()
     .then(contacts => {
+      console.log("Datos recibidos:", contacts);
       setPersons(contacts)
     })
     /*
