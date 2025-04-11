@@ -8,8 +8,8 @@ const Person = ({id, name, number, setPersons, persons}) => {
     if(window.confirm(`Delete ${name} ?`)){
       contactsService
       .del(id)
-      .then(() => {
-        setPersons(persons.filter(person => person.id !== id ))
+      .then(personDeleted => {
+        setPersons(persons.filter(person => person.id !== personDeleted.id ))
       })
     }
 }
@@ -49,8 +49,8 @@ const FormPersons = ({persons, setPersons, newName, newNumber, handleNameChange,
          }
          contactsService
         .update(existingPerson.id, person)
-        .then(response => {
-          setPersons(persons.map(person => person.id !== existingPerson.id ? person : response.data))
+        .then(updatedPerson => {
+          setPersons(persons.map(person => person.id !== existingPerson.id ? person : updatedPerson))
         })
       }
     } else {
@@ -117,7 +117,6 @@ const App = () => {
     contactsService
     .getAll()
     .then(contacts => {
-      console.log("Datos recibidos:", contacts);
       setPersons(contacts)
     })
     /*
