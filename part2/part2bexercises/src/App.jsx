@@ -21,8 +21,8 @@ const Person = ({id, name, number, setPersons, persons}) => {
     if(window.confirm(`Delete ${name} ?`)){
       contactsService
       .del(id)
-      .then(personDeleted => {
-        setPersons(persons.filter(person => person.id !== personDeleted.id ))
+      .then(() => {
+        setPersons(persons.filter(person => person.id !== id ))
       })
     }
 }
