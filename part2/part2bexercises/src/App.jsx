@@ -8,8 +8,8 @@ const Notification = ({ message }) => {
   }
 
   return (
-    <div className="error">
-      {message}
+    <div className = {message.type}>
+      {message.message}
     </div>
   )
 }
@@ -65,18 +65,20 @@ const FormPersons = ({persons, setPersons, newName, newNumber, handleNameChange,
         .then(updatedPerson => {
           setPersons(persons.map(person => person.id !== existingPerson.id ? person : updatedPerson))
 
-          setAddMessage(
-            `Contact "${existingPerson.name}" modified successfully`
-          )
+          setAddMessage({
+            message: `Contact "${existingPerson.name}" modified successfully`,
+            type: 'success'
+          })
           setTimeout(() => {
             setAddMessage(null)
           }, 5000)
           
         })
         .catch(error => {
-          setAddMessage(
-            `${error.response.data.error}`
-          )
+          setAddMessage({
+          message:  `${error.response.data.error}`,
+          type: 'error'
+        })
           setTimeout(() => {
             setAddMessage(null)
           }, 5000)
@@ -94,18 +96,20 @@ const FormPersons = ({persons, setPersons, newName, newNumber, handleNameChange,
       .then(person => {
         setPersons(persons.concat(person))
 
-        setAddMessage(
-          `Contact "${person.name}" added successfully`
-        )
+        setAddMessage({
+         message:  `Contact "${person.name}" added successfully`,
+         type: 'success'
+        })
         setTimeout(() => {
           setAddMessage(null)
         }, 5000)
 
       })
       .catch(error => {
-        setAddMessage(
-          `${error.response.data.error}`
-        )
+        setAddMessage({
+        message:  `${error.response.data.error}`,
+        type: 'error'
+      })
         setTimeout(() => {
           setAddMessage(null)
         }, 5000)
